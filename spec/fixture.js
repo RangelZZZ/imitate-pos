@@ -62,7 +62,7 @@ function loadPromotinProducts() {
             ]
         },
         {
-            type: 'FIVE_PERCENT_COUNT',
+            type: 'FIVE_PERCENT_DISCOUNT',
             barcodes: [
                 'ITEM000000',
                 'ITEM000002',

@@ -39,4 +39,6 @@ function findExistProduct(barcode, cartProducts) {
     return false;
 }
 
-module.exports = buildCartProducts;
+
+exports.buildCartProducts = buildCartProducts;
+
