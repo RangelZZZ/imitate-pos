@@ -2,6 +2,7 @@ var theNeedData = require("./fixture.js");
 var pos = require("../main/buildCartProducts.js");
 var pos1 = require("../main/calculateCartProducts.js");
 var pos2 = require("../main/calculateReceiptProducts.js");
+var pos3 = require("../main/generateReceiptList.js");
 
 describe("buidCartProducts", function () {
     var allProducts = theNeedData.loadAllProducts();
@@ -296,25 +297,72 @@ describe("calculateReceiptProducts", function () {
                 subTotal: 6.00,
                 savedTotal: 3.00
             }, {
-                    receiptProduct: {
-                        product: {
-                            barcode: 'ITEM000003',
-                            name: '荔枝',
-                            unit: '斤',
-                            price: 15.00
-                        },
-                        count: 3
+                receiptProduct: {
+                    product: {
+                        barcode: 'ITEM000003',
+                        name: '荔枝',
+                        unit: '斤',
+                        price: 15.00
                     },
-                    subTotal: 42.75,
-                    savedTotal: 2.25
-                }
+                    count: 3
+                },
+                subTotal: 42.75,
+                savedTotal: 2.25
+            }
             ],
             saved: 5.25,
             total: 48.75
-        }
+        };
 
         var receipt = pos2.calculateReceiptProducts(receiptProducts);
 
         expect(receipt).toEqual(expectReceipt);
+    });
+});
+
+describe("generateReceiptProducts", function () {
+
+    it("when there is no product to discount", function () {
+        var receipt = {
+            receiptProducts: [{
+                receiptProduct: {
+                    product: {
+                        barcode: 'ITEM000000',
+                        name: '可口可乐',
+                        unit: '瓶',
+                        price: 3.00
+                    },
+                    count: 3
+                },
+                subTotal: 9.00,
+                savedTotal: 0.00
+            }, {
+                receiptProduct: {
+                    product: {
+                        barcode: 'ITEM000003',
+                        name: '羽毛球',
+                        unit: '个',
+                        price: 1.00
+                    },
+                    count: 3
+                },
+                subTotal: 3.00,
+                savedTotal: 0.00
+            }],
+            saved: 0,
+            total: 12.00
+        };
+        var expectReceiptList =
+            "***<没钱赚商店>购物清单***\n" +
+            "名称：可口可乐，数量：3瓶，单价：3.00(元)，小计：9.00(元)\n" +
+            "名称：羽毛球，数量：3个，单价：1.00(元)，小计：3.00(元)\n" +
+            "----------------------\n" +
+            "总计：12.00(元)\n" +
+            "节省：0.00(元)\n" +
+            "**********************";
+
+        var receiptList = pos3.generateReceiptList(receipt);
+
+        expect(receiptList).toEqual(expectReceiptList);
     });
 });

@@ -6,7 +6,9 @@ function calculateReceiptProducts(receiptProducts) {
         saved += receiptProduct.savedTotal;
         total += receiptProduct.subTotal;
     });
-    return {receiptProducts: receiptProducts, saved: saved, total: total};
+    var receipt = ({receiptProducts: receiptProducts, saved: saved, total: total});
+
+    return receipt;
 }
 
 exports.calculateReceiptProducts = calculateReceiptProducts;
