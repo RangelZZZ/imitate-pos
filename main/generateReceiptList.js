@@ -1,7 +1,6 @@
 function generateReceiptList(receipt) {
     var receiptList = '***<没钱赚商店>购物清单***\n'
-        + getSubProductText(receipt.receiptProducts) +
-        '----------------------\n' +
+        + getSubProductText(receipt.receiptProducts) + '\n' +
         '总计：' + receipt.total.toFixed(2) + '(元)\n' +
         '节省：' + receipt.saved.toFixed(2) + '(元)\n' +
         '**********************';
@@ -18,23 +17,29 @@ function getSubProductText(receiptProducts) {
         productList += '名称：' + productText.product.name + '，数量：' + productText.count + productText.product.unit + '，单价：' + productText.product.price.toFixed(2) + '(元)，小计：' + receiptProduct.subTotal.toFixed(2) + '(元)\n';
     });
     var discountProductList = generateDiscountProductList(receiptProducts);
-
-    return productList + discountProductList;
+    if (discountProductList === '买二赠一商品：\n') {
+        return productList + '----------------------';
+    }
+    else {
+        return productList + '----------------------\n' + discountProductList +
+            '----------------------';
+    }
 }
 
 function generateDiscountProductList(receiptProducts) {
-    var discountProductLsit = '';
+    var discountReceiptList = '买二赠一商品：\n';
 
     receiptProducts.forEach(function (receiptProduct) {
         var productText = receiptProduct.receiptProduct;
-        var discountSaved = productText.product.price * parseFloat(productText.count / 3);
+        var discountCount = parseFloat(productText.count / 3);
+        var discountSaved = productText.product.price * discountCount;
 
         if (discountSaved === receiptProduct.savedTotal) {
-            discountProductLsit += '买二赠一商品:\n' + '名称:' + productText.product.name + "数量" + receiptProduct.count;
+            discountReceiptList += '名称：' + productText.product.name + "，数量：" + discountCount + productText.product.unit + '\n';
         }
     });
 
-    return discountProductLsit;
+    return discountReceiptList;
 }
 
 exports.generateReceiptList = generateReceiptList;
