@@ -6,7 +6,7 @@ describe("intergrate test", function () {
     var barcodes;
 
     beforeEach(function () {
-        allProducts = theNeedData. loadAllProducts();
+        allProducts = theNeedData.loadAllProducts();
         barcodes = ['ITEM000001',
             'ITEM000001',
             'ITEM000001',
@@ -16,7 +16,7 @@ describe("intergrate test", function () {
             'ITEM000005',
             'ITEM000005',
             'ITEM000005'
-        ]
+        ];
     });
     it('should print correct text', function () {
         spyOn(console, 'log');

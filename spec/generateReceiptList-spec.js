@@ -1,4 +1,5 @@
 var pos = require("../main/generateReceiptList.js");
+
 describe("generateReceiptProducts", function () {
 
     it("when there is no product to discount", function () {

@@ -72,9 +72,8 @@ function loadPromotinProducts() {
     ];
 }
 
-
 module.exports = {
     loadBarcodes: loadBarcodes,
     loadAllProducts: loadAllProducts,
     loadPromotinProducts: loadPromotinProducts
-}
+};
