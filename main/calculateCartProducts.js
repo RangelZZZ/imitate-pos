@@ -47,7 +47,7 @@ function getPromotionType(promotions, cartProduct) {
         if (findExistBarcode(cartProduct, promotionBarcodes)) {
             promotionType.push(promotions[i].type)
         }
-    } 
+    }
 
     return promotionType;
 }
