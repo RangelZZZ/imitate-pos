@@ -366,7 +366,7 @@ describe("generateReceiptProducts", function () {
         expect(receiptList).toEqual(expectReceiptList);
     });
 
-    it("when there are only buy two get one for free discount", function () {
+    it("the products are only buy two get one for free discount", function () {
         var receipt = {
             receiptProducts: [{
                 receiptProduct: {
@@ -412,4 +412,94 @@ describe("generateReceiptProducts", function () {
 
         expect(receiptList).toEqual(expectReceiptList);
     });
+
+    it("the products are only five percent discount", function () {
+        var receipt = {
+            receiptProducts: [{
+                receiptProduct: {
+                    product: {
+                        barcode: 'ITEM000002',
+                        name: '苹果',
+                        unit: '斤',
+                        price: 5.50
+                    },
+                    count: 2
+                },
+                subTotal: 10.45,
+                savedTotal: 0.55
+            }, {
+                receiptProduct: {
+                    product: {
+                        barcode: 'ITEM000001',
+                        name: '雪碧',
+                        unit: '瓶',
+                        price: 3.00
+                    },
+                    count: 3
+                },
+                subTotal: 9.00,
+                savedTotal: 0.00
+            }],
+            saved: 0.55,
+            total: 19.45
+        };
+
+        var expectReceiptList =
+            "***<没钱赚商店>购物清单***\n" +
+            "名称：苹果，数量：2斤，单价：5.50(元)，小计：10.45(元)\n" +
+            "名称：雪碧，数量：3瓶，单价：3.00(元)，小计：9.00(元)\n" +
+            "----------------------\n" +
+            "总计：19.45(元)\n" +
+            "节省：0.55(元)\n" +
+            "**********************";
+        var receiptList = pos3.generateReceiptList(receipt);
+
+        expect(receiptList).toEqual(expectReceiptList);
+    });
+
+    it("there are all kinds of products", function () {
+        var receipt = {
+            receiptProducts: [{
+                receiptProduct: {
+                    product: {
+                        barcode: 'ITEM000002',
+                        name: '苹果',
+                        unit: '斤',
+                        price: 5.50
+                    },
+                    count: 2
+                },
+                subTotal: 10.45,
+                savedTotal: 0.55
+            }, {
+                receiptProduct: {
+                    product: {
+                        barcode: 'ITEM000001',
+                        name: '雪碧',
+                        unit: '瓶',
+                        price: 3.00
+                    },
+                    count: 3
+                },
+                subTotal: 6.00,
+                savedTotal: 0.00
+            }],
+            saved: 3.55,
+            total: 16.45
+        };
+
+        var expectReceiptList =
+            "***<没钱赚商店>购物清单***\n" +
+            "名称：苹果，数量：2斤，单价：5.50(元)，小计：10.45(元)\n" +
+            "名称：雪碧，数量：3瓶，单价：3.00(元)，小计：6.00(元)\n" +
+            "----------------------\n" +
+            "总计：16.45(元)\n" +
+            "节省：3.55(元)\n" +
+            "**********************";
+        var receiptList = pos3.generateReceiptList(receipt);
+
+        expect(receiptList).toEqual(expectReceiptList);
+    });
 });
+
+
